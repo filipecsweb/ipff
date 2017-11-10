@@ -1,0 +1,34 @@
+.wrap input.large-text,
+.wrap textarea.large-text {
+    width: 100%;
+}
+
+.wrap .tabs-panel:not(.tabs-panel-active) {
+    display: none;
+}
+
+.wrap .instagram-user {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.wrap .instagram-user::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.wrap .username-wrapper,
+.wrap .token-wrapper {
+    width: 48%;
+    float: left;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-bottom: 1%;
+}
+
+.wrap .btn-get-token-wrapper {
+    clear: both;
+    padding-right: 1%;
+    padding-left: 1%;
+}
