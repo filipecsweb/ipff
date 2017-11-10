@@ -64,7 +64,7 @@ class Ipff_Settings {
 
 		$request_args = array(
 			'back_to'        => Ipff_Admin::$instagram['back_to'],
-			'parent_element' => 'instagram-user-0'
+			'parent_element' => 'instagram-user-1'
 		);
 
 		$request_args = json_encode( $request_args );
@@ -76,30 +76,30 @@ class Ipff_Settings {
 		$auth_url = Ipff_Admin::$instagram['auth_url'];
 		$auth_url .= "&redirect_uri=$redirect_uri"; ?>
 
-        <div id="instagram-user-0" class="instagram-user">
+        <div id="instagram-user-1" class="instagram-user">
             <div class="username-wrapper">
-                <label for="username-user-0">
+                <label for="username-user-1">
                     <span><?php _e( 'Username', 'ipff' ); ?></span>
                     <input class="large-text" type="text"
-                           id="username-user-0"
+                           id="username-user-1"
                            readonly
-                           name="<?php echo "ipff_settings[$id][user-0][username]"; ?>"
+                           name="<?php echo "ipff_settings[$id][user-1][username]"; ?>"
                            value="<?php echo Ipff_Admin::get_option_value( array(
 						       'key'        => 'ipff_settings',
-						       'subindexes' => "$id,user-0,username"
+						       'subindexes' => "$id,user-1,username"
 					       ) ); ?>"/>
                 </label>
             </div>
             <div class="token-wrapper">
-                <label for="token-user-0">
+                <label for="token-user-1">
                     <span>Token</span>
                     <input class="large-text" type="text"
-                           id="token-user-0"
+                           id="token-user-1"
                            readonly
-                           name="<?php echo "ipff_settings[$id][user-0][access_token]"; ?>"
+                           name="<?php echo "ipff_settings[$id][user-1][access_token]"; ?>"
                            value="<?php echo Ipff_Admin::get_option_value( array(
 						       'key'        => 'ipff_settings',
-						       'subindexes' => "$id,user-0,access_token"
+						       'subindexes' => "$id,user-1,access_token"
 					       ) ); ?>"/>
                 </label>
             </div>

@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Instagram Pro for Free
  * Plugin URI:        #
- * Description:       Display a user Instagram feed (gallery) anywhere using shortcode.
+ * Description:       Display a user Instagram feed (gallery) anywhere using shortcodes.
  * Version:           1.0.0
  * Author:            Filipe Seabra <filipe@seusobrinho.com.br>
  * Author URI:        http://seusobrinho.com.br

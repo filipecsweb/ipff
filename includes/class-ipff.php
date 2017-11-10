@@ -24,6 +24,7 @@ class Ipff {
 		$this->set_dependencies();
 		$this->set_locale();
 		$this->set_admin_actions();
+		$this->set_public_actions();
 
 	}
 
@@ -117,6 +118,25 @@ class Ipff {
 		 * @since   1.0.0
 		 */
 		add_action( 'admin_init', array( $ipff_admin, 'init_settings_page' ) );
+
+	}
+
+	private function set_public_actions() {
+
+		$ipff_public = new Ipff_Public();
+
+		/**
+		 * @link    https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts
+		 * @since   1.0.0
+		 */
+		add_action( 'wp_enqueue_scripts', array( $ipff_public, 'enqueue_public_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $ipff_public, 'enqueue_public_scripts' ) );
+
+		/**
+		 * @link    https://codex.wordpress.org/Plugin_API/Action_Reference/init
+		 * @since   1.0.0
+		 */
+		add_action( 'init', array( $ipff_public, 'init_shortcodes' ) );
 
 	}
 

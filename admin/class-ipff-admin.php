@@ -32,6 +32,9 @@ class Ipff_Admin {
 	 */
 	public static $options;
 
+	/**
+	 * @since    1.0.0
+	 */
 	public function __construct() {
 
 		if ( ! is_admin() ) {
@@ -40,7 +43,7 @@ class Ipff_Admin {
 
 		$this->set_instagram();
 		$this->set_options();
-		$this->set_admin_dependencies();
+		$this->set_dependencies();
 
 	}
 
@@ -74,7 +77,7 @@ class Ipff_Admin {
 	/**
 	 * @access  private
 	 */
-	private function set_admin_dependencies() {
+	private function set_dependencies() {
 
 		require IPFF_PATH . '/admin/class-ipff-menu.php';
 		require IPFF_PATH . '/admin/class-ipff-settings.php';
@@ -198,23 +201,21 @@ class Ipff_Admin {
 
 		$options = self::$options['ipff_settings'];
 
-		$value = $options;
+		$value = is_array( $options ) ? array_filter( $options ) : $options;
 
-		if ( ! empty( $args['subindexes'] ) ) {
+		if ( ! empty( $args['subindexes'] ) && $value ) {
 			$subindexes = explode( ',', $args['subindexes'] );
 
 			foreach ( $subindexes as $subindex ) {
-				if ( ! empty( $previous_value ) ) {
-					$value = $previous_value[ $subindex ];
-				} else {
-					$value = $value[ $subindex ];
+				if ( empty( $value[ $subindex ] ) ) {
+					continue;
 				}
 
-				$previous_value = $value;
+				$value = $value[ $subindex ];
 			}
 		}
 
-		return $value ? $value : '';
+		return is_array( $value ) || ! $value ? '' : $value;
 	}
 
 }
