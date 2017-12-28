@@ -1,3 +1,7 @@
+.wrap .hidden {
+    display: none !important;
+}
+
 .wrap input.large-text,
 .wrap textarea.large-text {
     width: 100%;
@@ -10,6 +14,10 @@
 .wrap .instagram-user {
     margin-left: -10px;
     margin-right: -10px;
+    display: flex;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
 }
 
 .wrap .instagram-user::after {
@@ -18,17 +26,25 @@
     clear: both;
 }
 
-.wrap .username-wrapper,
-.wrap .token-wrapper {
-    width: 48%;
-    float: left;
-    padding-left: 1%;
-    padding-right: 1%;
-    margin-bottom: 1%;
+.wrap .instagram-user [class*="-wrapper"] {
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-.wrap .btn-get-token-wrapper {
-    clear: both;
-    padding-right: 1%;
-    padding-left: 1%;
+.wrap .instagram-user ~ .instagram-user {
+    margin-top: 10px;
+}
+
+.wrap .instagram-user .username-wrapper {
+    flex-basis: 75%;
+}
+
+.wrap .instagram-user .profile-picture-wrapper {
+    flex-basis: 25%;
+}
+
+.wrap .instagram-user .profile-picture-wrapper .profile-picture {
+    height: 40px;
+    border-radius: 50%;
 }

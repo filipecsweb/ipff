@@ -17,6 +17,12 @@ class Ipff_Activator {
 	 */
 	public static function activate() {
 
+		$ipff_settings = get_option( 'ipff_setting' );
+
+		if ( ! $ipff_settings ) {
+			add_option( 'ipff_settings', '' );
+		}
+
 	}
 
 }

@@ -15,9 +15,9 @@ class Ipff_Settings {
 
 		$fields = array(
 			array(
+				'id'       => 'instagram_users',
 				'args'     => array(),
-				'callback' => array( $this, 'the_field__instagram_user' ),
-				'id'       => 'instagram_user',
+				'callback' => array( $this, 'the_field__instagram_users' ),
 				'page'     => 'ipff_settings_page',
 				'section'  => 'user_section-first',
 				'title'    => __( 'Instagram Users', 'ipff' )
@@ -58,13 +58,10 @@ class Ipff_Settings {
 
 	}
 
-	public function the_field__instagram_user( $args ) {
-
-		$id = $args['id'];
+	public function the_field__instagram_users( $args ) {
 
 		$request_args = array(
-			'back_to'        => Ipff_Admin::$instagram['back_to'],
-			'parent_element' => 'instagram-user-1'
+			'back_to' => Ipff_Admin::$instagram['back_to'],
 		);
 
 		$request_args = json_encode( $request_args );
@@ -74,43 +71,11 @@ class Ipff_Settings {
 		$redirect_uri .= "?request_args=$request_args";
 
 		$auth_url = Ipff_Admin::$instagram['auth_url'];
-		$auth_url .= "&redirect_uri=$redirect_uri"; ?>
+		$auth_url .= "&redirect_uri=$redirect_uri";
 
-        <div id="instagram-user-1" class="instagram-user">
-            <div class="username-wrapper">
-                <label for="username-user-1">
-                    <span><?php _e( 'Username', 'ipff' ); ?></span>
-                    <input class="large-text" type="text"
-                           id="username-user-1"
-                           readonly
-                           name="<?php echo "ipff_settings[$id][user-1][username]"; ?>"
-                           value="<?php echo Ipff_Admin::get_option_value( array(
-						       'key'        => 'ipff_settings',
-						       'subindexes' => "$id,user-1,username"
-					       ) ); ?>"/>
-                </label>
-            </div>
-            <div class="token-wrapper">
-                <label for="token-user-1">
-                    <span>Token</span>
-                    <input class="large-text" type="text"
-                           id="token-user-1"
-                           readonly
-                           name="<?php echo "ipff_settings[$id][user-1][access_token]"; ?>"
-                           value="<?php echo Ipff_Admin::get_option_value( array(
-						       'key'        => 'ipff_settings',
-						       'subindexes' => "$id,user-1,access_token"
-					       ) ); ?>"/>
-                </label>
-            </div>
-            <div class="btn-get-token-wrapper textright">
-                <a href="<?php echo $auth_url; ?>" class="button-secondary btn-get-token">
-                    <span><?php _e( 'Add user', 'ipff' ); ?> &raquo;</span>
-                </a>
-            </div>
-        </div>
+		require IPFF_PATH . "/admin/view/fields/instagram_users.php";
 
-	<?php }
+	}
 
 	public function sanitize__ipff_settings( $input ) {
 

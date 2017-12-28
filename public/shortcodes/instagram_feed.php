@@ -20,7 +20,7 @@ function instagram_feed( $atts ) {
 
 	extract( $atts );
 
-	$access_token = Ipff_Public::$options['ipff_settings']['instagram_user']["user-$id"]['access_token'];
+	$access_token = Ipff_Public::$options['ipff_settings']['instagram_users']["user-$id"]['token'];
 
 	$feed = file_get_contents( "https://api.instagram.com/v1/users/self/media/recent/?access_token=$access_token" );
 	$feed = json_decode( $feed );

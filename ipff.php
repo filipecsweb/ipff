@@ -52,6 +52,16 @@ function deactivate_ipff() {
 register_activation_hook( __FILE__, 'activate_ipff' );
 register_deactivation_hook( __FILE__, 'deactivate_ipff' );
 
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), function ( $links ) {
+
+	$url = admin_url( "options-general.php?page=ipff_settings" );
+
+	$links[] = "<a href='$url'>" . __( "Settings" ) . "</a>";
+
+	return $links;
+
+} );
+
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.

@@ -1,8 +1,15 @@
 (function ($) {
 
-    var l10n = {
-        user_denied_app: localized_admin_ipff.user_denied_app
-    };
+    var elements = {
+            instagram_users_wrapper: $('.instagram-users-wrapper')
+        },
+        l10n = {
+            denied: localized_admin_ipff.denied,
+            reauthorized: localized_admin_ipff.reauthorized,
+            authorized: localized_admin_ipff.authorized,
+            ipff_settings: localized_admin_ipff.ipff_settings
+        },
+        ig_response = {};
 
     /**
      * Handles nav tabs UI.
@@ -22,61 +29,110 @@
     });
 
     /**
-     * Handles Instagram User data.
+     * Handles Instagram authorization response.
      */
-    // Init.
     (function () {
-        var query_string = window.location.search;
 
-        var error_reason = query_string.match(/error_reason=([^&]+)/);
+        var hash = window.location.hash;
 
-        if (error_reason !== null) {
-            var notice = get_notice(l10n.user_denied_app, 'error');
-
-            $('.notice-wrapper', '.wrap').html(notice);
-        } else {
-            var parent_element = query_string.match(/parent_element=([^&]+)/);
-
-            if (parent_element === null) {
-                return false;
-            }
-
-            var token = query_string.match(/token=([^&]+)/);
-
-            if (token === null) {
-                return false;
-            }
-
-            var username = query_string.match(/username=([^&]+)/);
-
-            if (username === null) {
-                return false;
-            }
-
-            set_user_data(
-                {
-                    parent_element: parent_element[1],
-                    token: token[1],
-                    username: username[1]
-                }
-            );
+        if (hash === "") {
+            return false;
         }
+
+        $.each(hash.split('#'), function (i, value) {
+            if (value.length === 0) {
+                return;
+            }
+
+            var pieces = value.split('=');
+
+            //ig_response[token] = 2183gsdagsd81yhjsgd.
+            ig_response[pieces[0]] = pieces[1];
+        });
+
+        if ("error_reason" in ig_response) {
+            set_notice({
+                type: "error",
+                msg: l10n.denied
+            });
+
+            return false;
+        }
+
+        if (!("username") in ig_response) {
+            return false;
+        }
+
+        if (instagram_user_already_exits(ig_response) === true) {
+            set_notice({
+                type: "error",
+                msg: l10n.reauthorized.replace("%s", ig_response.username)
+            });
+
+            return false;
+        }
+
+        set_notice({
+            type: "info",
+            msg: l10n.authorized.replace("%s", ig_response.username)
+        });
+
+        set_instagram_user(ig_response);
 
     })();
 
-    function set_user_data(data) {
-        var parent = $("#" + data.parent_element);
+    function instagram_user_already_exits(args) {
 
-        $('[name*="username"]', parent).val(data.username);
-        $('[name*="token"]', parent).val(data.token);
+        var answer = false;
+
+        $(".instagram-user input[name*='username']", elements.instagram_users_wrapper).each(function () {
+
+            if ($(this).val() === args.username) {
+                answer = true;
+
+                return false;
+            }
+
+        });
+
+        return answer;
+
     }
 
-    function get_notice(html, type) {
-        var notice = "<div class='notice notice-" + type + " is-dismissible'>";
-        notice += "<p>" + html + "</p>";
-        notice += "</div";
+    function set_instagram_user(args) {
 
-        return notice
+        var ipff_settings = l10n.ipff_settings;
+
+        if (ipff_settings.length === 0) {
+            $('.instagram-user.hidden', elements.instagram_users_wrapper).removeClass('hidden');
+        } else {
+            var user_count = parseInt($('.instagram-user:last', elements.instagram_users_wrapper).data('user-count'));
+            var next_user_count = user_count + 1;
+            var subject = new RegExp("user-" + user_count, "g");
+
+            $('.instagram-user:last', elements.instagram_users_wrapper)
+                .clone(true)
+                .html(function (i, oldHTML) {
+                    return oldHTML.replace(subject, "user-" + next_user_count);
+                })
+                .appendTo(elements.instagram_users_wrapper);
+        }
+
+        $('.instagram-user:last [name*="username"]', elements.instagram_users_wrapper).val(args.username);
+        $('.instagram-user:last [name*="id"]', elements.instagram_users_wrapper).val(args.id);
+        $('.instagram-user:last [name*="profile_picture"]', elements.instagram_users_wrapper).val(args.profile_picture);
+        $('.instagram-user:last .profile-picture', elements.instagram_users_wrapper).attr('src', args.profile_picture);
+        $('.instagram-user:last [name*="token"]', elements.instagram_users_wrapper).val(args.token);
+        $(".btn-auth-user-wrapper").addClass("hidden");
+
+    }
+
+    function set_notice(args) {
+        var html = "<div class='notice notice-" + args.type + " is-dismissible'>" +
+            "<p>" + args.msg + "</p>" +
+            "</div>";
+
+        $(".notice-wrapper", ".wrap").html(html);
     }
 
 })(jQuery);

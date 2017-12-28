@@ -97,13 +97,32 @@ class Ipff_Admin {
 			return;
 		}
 
-		wp_enqueue_style(
-			'admin-' . IPFF_SLUG,
-			IPFF_URL . 'admin/css/ipff-admin.css',
-			array(),
-			IPFF_VERSION,
-			'all'
+		$handles = array(
+			array(
+				'handle' => 'ss-tooltip',
+				'src'    => IPFF_URL . 'admin/css/ss-tooltip.css',
+				'deps'   => array(),
+				'ver'    => '',
+				'media'  => 'all'
+			),
+			array(
+				'handle' => 'admin-' . IPFF_SLUG,
+				'src'    => IPFF_URL . 'admin/css/ipff-admin.css',
+				'deps'   => array(),
+				'ver'    => IPFF_VERSION,
+				'media'  => 'all'
+			)
 		);
+
+		foreach ( $handles as $handle ) {
+			wp_enqueue_style(
+				$handle['handle'],
+				$handle['src'],
+				$handle['deps'],
+				$handle['ver'],
+				$handle['media']
+			);
+		}
 
 	}
 
@@ -120,24 +139,52 @@ class Ipff_Admin {
 			return;
 		}
 
-		$handle = 'admin_' . IPFF_SLUG;
-
-		wp_register_script(
-			$handle,
-			IPFF_URL . 'admin/js/ipff-admin.js',
-			array( 'jquery' ),
-			IPFF_VERSION,
-			true
-		);
-
 		$l10n = array(
-			'user_denied_app' => __( 'You did not authorize the app. Try again and be sure to authorize the app.',
-				'ipff' )
+			0 => array(
+				'denied'        => __( "You did not authorize the plugin. Retry and authorize it.", 'ipff' ),
+				'reauthorized'  => __( "The Instagram user %s is here already. If you are trying to add another user, log out from Instagram.", 'ipff' ),
+				'authorized'    => __( "The Instagram user %s was added. Please, save changes now.", 'ipff' ),
+				'ipff_settings' => Ipff_Admin::$options['ipff_settings']
+			)
 		);
 
-		wp_localize_script( $handle, "localized_$handle", $l10n );
+		$handles = array(
+			array(
+				'handle'    => 'ss-tooltip',
+				'src'       => IPFF_URL . 'admin/js/ss-tooltip.js',
+				'deps'      => array( 'jquery' ),
+				'ver'       => '',
+				'in_footer' => true
+			),
+			array(
+				'handle'    => 'admin_' . IPFF_SLUG,
+				'src'       => IPFF_URL . 'admin/js/ipff-admin.js',
+				'deps'      => array( 'ss-tooltip' ),
+				'ver'       => IPFF_VERSION,
+				'in_footer' => true,
+				'l10n'      => $l10n[0]
+			),
+		);
 
-		wp_enqueue_script( $handle );
+		foreach ( $handles as $handle ) {
+			wp_register_script(
+				$handle['handle'],
+				$handle['src'],
+				$handle['deps'],
+				$handle['ver'],
+				$handle['in_footer']
+			);
+		}
+
+		foreach ( $handles as $handle ) {
+			if ( ! empty( $handle['l10n'] ) ) {
+				wp_localize_script( $handle['handle'], "localized_{$handle['handle']}", $handle['l10n'] );
+			}
+		}
+
+		foreach ( $handles as $handle ) {
+			wp_enqueue_script( $handle['handle'] );
+		}
 
 	}
 
