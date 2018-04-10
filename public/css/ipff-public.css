@@ -25,14 +25,20 @@
 }
 
 .instagram-feed-wrapper .bg-wrapper .bg-carrier {
+    -webkit-transition: transform 150ms;
+    -moz-transition: transform 150ms;
+    -o-transition: transform 150ms;
+    transition: transform 150ms;
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 1;
+    will-change: opacity, transform;
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
-    -webkit-transition: transform 150ms;
-    -moz-transition: transform 150ms;
-    -ms-transition: transform 150ms;
-    -o-transition: transform 150ms;
-    transition: transform 150ms;
     position: absolute;
     top: 0;
     left: 0;

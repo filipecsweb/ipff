@@ -70,17 +70,17 @@ class Ipff_Public {
 	 */
 	public function enqueue_public_scripts() {
 
-		$handle = 'public_' . IPFF_SLUG;
-
-		wp_register_script(
-			$handle,
-			IPFF_URL . 'public/js/ipff-public.js',
-			array( 'jquery' ),
-			IPFF_VERSION,
-			true
-		);
-
-		wp_enqueue_script( $handle );
+//		$handle = 'public_' . IPFF_SLUG;
+//
+//		wp_register_script(
+//			$handle,
+//			IPFF_URL . 'public/js/ipff-public.js',
+//			array( 'jquery' ),
+//			IPFF_VERSION,
+//			true
+//		);
+//
+//		wp_enqueue_script( $handle );
 
 	}
 
