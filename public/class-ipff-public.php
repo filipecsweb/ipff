@@ -18,10 +18,8 @@ class Ipff_Public {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-
 		$this->set_options();
 		$this->set_dependencies();
-
 	}
 
 	/**
@@ -37,9 +35,8 @@ class Ipff_Public {
 	 * @since   1.0.0
 	 */
 	private function set_dependencies() {
-
+		require IPFF_PATH . '/public/functions.php';
 		require IPFF_PATH . '/public/shortcodes/class-ipff-shortcode.php';
-
 	}
 
 	/**
@@ -50,15 +47,13 @@ class Ipff_Public {
 	 * @since   1.0.0
 	 */
 	public function enqueue_public_styles() {
-
 		wp_enqueue_style(
 			'public-' . IPFF_SLUG,
-			IPFF_URL . 'public/css/ipff-public.css',
+			IPFF_URL . 'public/css/ipff-public.min.css',
 			array(),
 			IPFF_VERSION,
 			'all'
 		);
-
 	}
 
 	/**
@@ -69,7 +64,6 @@ class Ipff_Public {
 	 * @since   1.0.0
 	 */
 	public function enqueue_public_scripts() {
-
 //		$handle = 'public_' . IPFF_SLUG;
 //
 //		wp_register_script(
@@ -81,7 +75,6 @@ class Ipff_Public {
 //		);
 //
 //		wp_enqueue_script( $handle );
-
 	}
 
 	/**

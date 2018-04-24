@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'IPFF_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IPFF_URL', plugin_dir_url( __FILE__ ) );
-define( 'IPFF_VERSION', '1.0.0' );
+define( 'IPFF_VERSION', '1.0.1' );
 define( 'IPFF_SLUG', 'ipff' );
 
 /**
@@ -54,7 +54,7 @@ register_deactivation_hook( __FILE__, 'deactivate_ipff' );
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), function ( $links ) {
 
-	$url = admin_url( "options-general.php?page=ipff_settings" );
+	$url = admin_url( "options-general.php?page=ipff_settings_page" );
 
 	$links[] = "<a href='$url'>" . __( "Settings" ) . "</a>";
 
