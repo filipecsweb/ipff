@@ -44,10 +44,10 @@
                 return;
             }
 
-            var pieces = value.split('=');
+            var pieces = value.match(/([^=]+)=(.+)/);
 
             //ig_response[token] = 2183gsdagsd81yhjsgd.
-            ig_response[pieces[0]] = pieces[1];
+            ig_response[pieces[1]] = pieces[2];
         });
 
         if ("error_reason" in ig_response) {
@@ -100,6 +100,8 @@
     }
 
     function set_instagram_user(args) {
+
+        console.log(args);
 
         var ipff_settings = l10n.ipff_settings;
 

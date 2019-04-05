@@ -55,7 +55,15 @@ class Ipff_Admin {
 
 		$redirect_uri = "https://seusobrinho.com.br/api/instagram/oauth.php";
 
-		$auth_url = "https://api.instagram.com/oauth/authorize/?client_id=cd2a18ef4a3a4f9a91a81a7919183b31&response_type=code";
+		$auth_url = "https://api.instagram.com/oauth/authorize/";
+
+		$auth_url .= "?client_id=cd2a18ef4a3a4f9a91a81a7919183b31&response_type=code";
+
+		/**
+		 * This is supposed to avoid trouble, but it can also cause it.
+		 * If you are allowing the app but you are getting an error response, it might be related to the h - host language.
+		 */
+		$auth_url .= "&hl=en";
 
 		self::$instagram = array(
 			'auth_url'     => $auth_url,
@@ -229,7 +237,7 @@ class Ipff_Admin {
 	/**
 	 * This function retrieves a value given a key and subindexes separated by comma.
 	 *
-	 * @param   array $args Array of argumetns:
+	 * @param array $args       Array of argumetns:
 	 *                          key
 	 *                          subindexes
 	 *
