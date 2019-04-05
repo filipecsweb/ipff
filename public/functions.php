@@ -13,8 +13,8 @@
  *
  * @link    http://php.net/manual/en/function.file-put-contents.php
  *
- * @param   string $html
- * @param   string $file The path for the cache file in which the HTML should be stored.
+ * @param string $html
+ * @param string $file The path for the cache file in which the HTML should be stored.
  */
 function ipff_cache_recent_media( $html, $file = '' ) {
 	if ( $file === '' ) {
@@ -23,18 +23,22 @@ function ipff_cache_recent_media( $html, $file = '' ) {
 
 	$html = preg_replace( "/[\n\r]|\s\s+/", '', $html );
 
+	if ( ! file_exists( dirname( $file ) ) ) {
+		mkdir( dirname( $file ), 0755, true );
+	}
+
 	file_put_contents( $file, $html );
 }
 
 function ipff_get_recent_media( $args ) {
 	$args = array_merge(
-		$args,
 		array(
 			'id'     => 1,
 			'cols'   => 4,
 			'count'  => 8,
 			'layout' => 1,
-		)
+		),
+		$args
 	);
 
 	$id     = $args['id'];
@@ -77,7 +81,6 @@ function ipff_get_recent_media( $args ) {
             <div class="instagram-feed">
 				<?php
 				foreach ( $recent_media_data as $k => $_post ) {
-
 					if ( $k >= $count ) {
 						break;
 					}
@@ -87,7 +90,7 @@ function ipff_get_recent_media( $args ) {
 					$post_link = $_post->link; ?>
                     <div class="item bg-wrapper">
                         <div class="bg-carrier" style="background-image: url('<?php echo $standard_img_url; ?>');"></div>
-                        <a class="link-carrier" href="<?php echo $post_link; ?>" target="_blank"></a>
+                        <a class="link-carrier" href="<?php echo $post_link; ?>" target="_blank" rel="nofollow"></a>
                     </div>
 				<?php } ?>
             </div>
